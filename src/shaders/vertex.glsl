@@ -154,7 +154,7 @@ void main()
     float progress1=smoothstep(-1.,8.,newpos.y);
     
     vProgress=progress;
-    
+    // go to desos and go see y=x^3
     newpos.z+=progress*-newpos.y*newpos.y*newpos.y;
     
     vec3 noise1=position;
