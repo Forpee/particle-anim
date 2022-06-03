@@ -22,7 +22,21 @@ const scene = new THREE.Scene();
  */
 // Geometry
 const geometry = new THREE.BufferGeometry();
+let count = 500;
 
+let position = new Float32Array(count * count * 3);
+for (let i = 0; i < count; i++) {
+    for (let j = 0; j < count; j++) {
+        position.set([
+            (i / count - 0.5) * 20,
+            (j / count - 0.5) * 20,
+            0
+        ], 3 * (count * i + j));
+
+    }
+
+}
+geometry.setAttribute('position', new THREE.BufferAttribute(position, 3));
 // Material
 const material = new THREE.ShaderMaterial({
     uniforms: {
@@ -30,7 +44,11 @@ const material = new THREE.ShaderMaterial({
     },
     vertexShader: vertexShader,
     fragmentShader: fragmentShader,
-    side: THREE.DoubleSide
+    transparent: true,
+    depthWrite: false,
+    depthTest: false,
+    side: THREE.DoubleSide,
+    blending: THREE.AdditiveBlending,
 });
 
 // Mesh
@@ -67,7 +85,7 @@ window.addEventListener('resize', () => {
 
 // Base camera
 const camera = new THREE.PerspectiveCamera(75, sizes.width / sizes.height, 0.1, 100);
-camera.position.set(0, 0, 2);
+camera.position.set(0, -1, -0.1);
 scene.add(camera);
 
 // Controls
